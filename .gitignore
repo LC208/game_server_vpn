@@ -1,0 +1,55 @@
+# === Build artifacts ===
+/build/
+/cmake-build-*/
+
+# === Conan cache and generated files ===
+conan.lock
+conanbuild/
+/conanfile.pyc
+/conanfile.txt.pyc
+/conan/
+.vsconan
+
+# === CMake generated files ===
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+compile_commands.json
+
+# === IDEs and editors ===
+.vscode/
+.idea/
+*.code-workspace
+
+# === OS-specific ===
+.DS_Store
+Thumbs.db
+
+# === Logs and temp ===
+*.log
+*.tmp
+*.bak
+
+# === Binaries ===
+*.exe
+*.out
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+
+# === Test results ===
+Testing/
+CTestTestfile.cmake
+LastTest.log
+test_detail.xml
+
+# === Coverage and profiling ===
+*.gcda
+*.gcno
+*.gcov
+*.profraw
+*.profdata
+coverage/

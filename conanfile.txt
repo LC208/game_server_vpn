@@ -1,0 +1,17 @@
+[requires]
+qt/6.5.3
+catch2/3.5.4
+libb2/20190723
+
+
+[options]
+qt/6.5.3:shared=False
+qt/6.5.3:gui=True
+qt/6.5.3:widgets=True
+qt/6.5.3:opengl=desktop
+qt/6.5.3:with_x11=True
+qt/6.5.3:with_glib=False
+
+[generators]
+CMakeToolchain
+CMakeDeps

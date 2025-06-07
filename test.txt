@@ -1,0 +1,17 @@
+-- Using Conan toolchain: /home/lc208/docker-vpn/build/conan/conan_toolchain.cmake
+-- Conan toolchain: Defining architecture flag: -m64
+-- Conan toolchain: Defining libcxx as C++ flags: -stdlib=libc++
+-- Conan toolchain: C++ Standard 20 with extensions ON
+-- Conan: Component target declared 'Catch2::Catch2'
+-- Conan: Component target declared 'Catch2::Catch2WithMain'
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/lc208/docker-vpn/build
+[ 14%] Building CXX object CMakeFiles/mylib.dir/src/main.cpp.o
+[ 28%] Building CXX object CMakeFiles/mylib.dir/src/mylib.cpp.o
+[ 42%] Linking CXX static library libmylib.a
+[ 42%] Built target mylib
+[ 57%] Linking CXX executable my_project
+[ 71%] Built target my_project
+[ 85%] Linking CXX executable tests
+[100%] Built target tests
