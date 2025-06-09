@@ -3,6 +3,7 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include "trim.hpp"
 
 static int runCommand(const std::string& cmd) {
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
@@ -17,7 +18,24 @@ static int runCommand(const std::string& cmd) {
     }
 
     int status = pclose(pipe.release());
+
     return WEXITSTATUS(status);
+}
+
+static std::string runCommandWithReturn(const std::string& cmd)
+{
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+
+    char buffer[128];
+    std::string result;
+    while (fgets(buffer, sizeof(buffer), pipe.get()) != nullptr) {
+        result += buffer;
+    }
+    
+    return result;
 }
 
 DockerContainer::DockerContainer(std::string id) : containerId(std::move(id)) {}
@@ -52,4 +70,17 @@ void DockerContainer::remove() {
     if (status != 0) {
         throw std::runtime_error("Failed to remove container: " + containerId);
     }
+}
+
+
+ContainerStatus DockerContainer::status() {
+    std::string s = trim(runCommandWithReturn( "docker inspect -f '{{.State.Status}}' " + containerId));
+    
+    if (s == "created") return ContainerStatus::Created;
+    if (s == "running") return ContainerStatus::Running;
+    if (s == "paused")  return ContainerStatus::Paused;
+    if (s == "exited")  return ContainerStatus::Exited;
+    if (s == "dead")    return ContainerStatus::Dead;
+    if (s == "removing")return ContainerStatus::Removing;
+    return ContainerStatus::Unknown;
 }

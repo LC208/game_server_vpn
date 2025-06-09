@@ -8,7 +8,7 @@ public:
     void start() override;
     void stop() override;
     void remove() override;
-
+    ContainerStatus status() override;
 private:
     std::string containerId;
     bool running = false;

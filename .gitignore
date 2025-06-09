@@ -1,6 +1,7 @@
 # === Build artifacts ===
 /build/
 /cmake-build-*/
+.cache
 
 # === Conan cache and generated files ===
 conan.lock

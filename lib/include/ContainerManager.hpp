@@ -1,6 +1,15 @@
 #pragma once
 #include <string>
-#include <vector>
+
+enum class ContainerStatus {
+    Created,
+    Running,
+    Paused,
+    Exited,
+    Dead,
+    Removing,
+    Unknown
+};
 
 class IContainer {
 public:
@@ -9,6 +18,7 @@ public:
     virtual void start() = 0;
     virtual void stop() = 0;
     virtual void remove() = 0;
+    virtual ContainerStatus status() = 0;
 };
 
 class ContainerManager {
