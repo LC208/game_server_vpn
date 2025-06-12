@@ -1,33 +1,17 @@
 #include "DockerContainerManager.hpp"
-#include "DockerContainer.hpp"
 #include <memory>
 #include <cstdio>
-#include <array>
 #include <string>
+#include "ContainerManager.hpp"
 
 #ifdef _WIN32
 #define popen _popen
 #define pclose _pclose
 #endif
 
-IContainer* DockerContainerManager::createContainer(const std::string& imageName) {
-    std::string cmd = "docker create " + imageName;
-
-    std::array<char, 128> buffer;
-    std::string containerId;
-
-    FILE* pipe = popen(cmd.c_str(), "r");
-    if (!pipe) return nullptr;
-
-    if (fgets(buffer.data(), static_cast<int>(buffer.size()), pipe) != nullptr) {
-        containerId = buffer.data();
-        containerId.erase(containerId.find_last_not_of(" \n\r\t") + 1);
-    }
-    pclose(pipe);
-
-    if (containerId.empty()) return nullptr;
-
-    auto container = std::make_unique<DockerContainer>(containerId);
+IContainer* DockerContainerManager::createContainer() {
+    auto container = factory.create("docker");
+    if (!container) return nullptr;
     IContainer* rawPtr = container.get();
     containers.push_back(std::move(container));
 

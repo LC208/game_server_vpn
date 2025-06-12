@@ -66,13 +66,13 @@ TEST_CASE("DockerContainer: remove", "[docker][container]") {
 
 
 TEST_CASE("DockerContainerManager: availability", "[docker][manager]") {
-    DockerContainerManager manager;
+    DockerContainerManager manager(ContainerFactory().setImage("alpine"));
     REQUIRE(manager.isAvailable());
 }
 
 TEST_CASE("DockerContainerManager: create container", "[docker][manager]") {
-    DockerContainerManager manager;
-    IContainer* container = manager.createContainer("alpine");
+    DockerContainerManager manager(ContainerFactory().setImage("alpine"));
+    IContainer* container = manager.createContainer();
     REQUIRE(container != nullptr);
     REQUIRE_FALSE(container->id().empty());
 
@@ -80,9 +80,9 @@ TEST_CASE("DockerContainerManager: create container", "[docker][manager]") {
 }
 
 TEST_CASE("DockerContainerManager: manage multiple containers", "[docker][manager]") {
-    DockerContainerManager manager;
-    IContainer* container1 = manager.createContainer("alpine");
-    IContainer* container2 = manager.createContainer("alpine");
+    DockerContainerManager manager(ContainerFactory().setImage("alpine"));
+    IContainer* container1 = manager.createContainer();
+    IContainer* container2 = manager.createContainer();
 
     REQUIRE(container1);
     REQUIRE(container2);
